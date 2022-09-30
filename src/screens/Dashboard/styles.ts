@@ -85,6 +85,9 @@ export const Title = styled.Text`
 
 export const TransactionList = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingBottom: getStatusBarHeight(),
+  },
 })`
   margin-top: 8px;
 `;

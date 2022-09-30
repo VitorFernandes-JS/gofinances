@@ -1,26 +1,45 @@
-import React from 'react';
-import { Container, Title, Amount, Footer, Category, Icon,  CategoryName, Date } from './styles';
+import React from "react";
+import {
+  Container,
+  Title,
+  Amount,
+  Footer,
+  Category,
+  Icon,
+  CategoryName,
+  Date,
+} from "./styles";
 
-export function TransactionCard() {
+
+
+export interface Category {
+  name: string;
+  icon: string;
+}
+
+export interface Data {
+  type: 'positive' | 'negative';
+  title: string;
+  amount: string;
+  category: Category;
+  date: string;
+}
+export interface Props {
+  data: Data;
+}
+
+export function TransactionCard({ data }: Props) {
   return (
     <Container>
-        <Title>
-            Desenvolvimento de site
-        </Title>
-        <Amount>
-            R$ 12.000,00
-        </Amount>
-        <Footer>
-            <Category>
-                <Icon name="dollar-sign"/>
-                <CategoryName>
-                    Vendas
-                </CategoryName>
-            </Category>
-            <Date>
-                13/04/2020
-            </Date>
-        </Footer>
+      <Title>{data.title}</Title>
+      <Amount>{data.amount}</Amount>
+      <Footer>
+        <Category>
+          <Icon name="dollar-sign" />
+          <CategoryName>{data.category.name}</CategoryName>
+        </Category>
+        <Date>{data.date}</Date>
+      </Footer>
     </Container>
   );
 }
