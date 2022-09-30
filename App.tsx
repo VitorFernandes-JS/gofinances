@@ -27,9 +27,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
         <StatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="light-content"
+        hidden translucent={true}
         />
       <Dashboard />
       </ThemeProvider>
