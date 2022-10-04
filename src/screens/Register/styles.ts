@@ -13,6 +13,8 @@ export const Header = styled.View`
     align-items: center;
     justify-content: flex-end;
     padding-bottom: 23px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
 `;
 
 export const Title = styled.Text`
