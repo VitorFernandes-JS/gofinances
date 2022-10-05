@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from "react-native";
 import { Button } from "../../components/Form/Button";
 import { Input } from "../../components/Form/Input";
 import { TransactionTypeButton } from "../../components/Form/TransactionTypeButton";
-import { CategorySelect } from "../../components/CategorySelect";
+import { CategorySelectButton } from "../../components/CategorySelectButton";
 import {
   Container,
   Header,
@@ -42,7 +43,7 @@ export function Register() {
               isActive={transactionType === "down"}
             />
           </TransactionsTypes>
-            <CategorySelect title="Categoria" />
+            <CategorySelectButton title="Categoria" />
         </Fields>
         <Button title="Enviar" />
       </Form>
