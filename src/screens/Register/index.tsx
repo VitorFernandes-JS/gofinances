@@ -20,10 +20,19 @@ import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-interface FormData {
+interface FormData  {
   name: string;
   amount: string;
 }
+
+const schema = Yup.object().shape({
+  name: Yup.string().required("Nome é obrigatório"),
+  amount: Yup.number()
+    .transform((_value, originalValue) => Number(originalValue.replace(/,/, '.'))) //converte a virgula em ponto
+    .typeError("Informe um valor numérico")
+    .positive("O valor não pode ser negativo")
+    .required("O valor é obrigatório"),
+});
 
 export function Register() {
   const [category, setCategory] = useState({
@@ -45,9 +54,9 @@ export function Register() {
       amount: form.amount,
       transactionType,
       category: category.key,
-    };
+    }
     console.log(data);
-  }
+  };
 
   function handleTransactionTypeSelect(type: "up" | "down") {
     setTransactionType(type);
@@ -61,7 +70,13 @@ export function Register() {
     setCategoryModalOpen(false);
   }
 
-  const { control, handleSubmit } = useForm();
+  const { 
+    control, 
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -78,12 +93,14 @@ export function Register() {
               control={control}
               autoCapitalize="sentences"
               autoCorrect={false}
+              error={errors.name && errors.name.message}
             />
             <InputForm
               placeholder="Preço"
               name="amount"
               control={control}
               keyboardType="numeric"
+              error={errors.amount && errors.amount.message}
             />
             <TransactionsTypes>
               <TransactionTypeButton
