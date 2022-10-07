@@ -1,5 +1,5 @@
 // importações nativas
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Alert, Modal, TouchableWithoutFeedback, Keyboard } from "react-native";
 import {
   Container,
@@ -47,7 +47,6 @@ export function Register() {
   const navigation = useNavigation();
   const [transactionType, setTransactionType] = useState("");
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
-  const dataKey = "@gofinances:transactions";
   
   function handleTransactionTypeSelect(type: "up" | "down") {
     setTransactionType(type);
@@ -71,7 +70,6 @@ export function Register() {
   });
 
   async function handleRegister(form: FormData) {
-
     if (!transactionType)
       return Alert.alert("Ops, você esqueceu de selecionar o tipo da transação!");
 
@@ -88,6 +86,7 @@ export function Register() {
     };
 
     try {
+      const dataKey = "@gofinances:transactions";
       const data = await AsyncStorage.getItem(dataKey); //pega os dados do storage
       const currentData = data ? JSON.parse(data) : []; // se tiver dados, converte para objeto, se não, retorna um array vazio
       
