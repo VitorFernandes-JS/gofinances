@@ -42,7 +42,7 @@ export function Register() {
   const [transactionType, setTransactionType] = useState("");
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
 
-  function handleRegister(form: FormData) {
+  function handleRegister(form: any) {
     if (!transactionType)
       return Alert.alert(
         "Ops, você esqueceu de selecionar o tipo da transação!"
