@@ -24,8 +24,8 @@ import uuid from "react-native-uuid";
 import { useNavigation } from "@react-navigation/native";
 
 interface FormData {
-  name: string;
-  amount: string;
+  [name: string]: any;
+  [amount: number]: any;
 }
 
 const schema = Yup.object().shape({
@@ -93,6 +93,7 @@ export function Register() {
       const dataFormatted = [...currentData, newTransaction]; // concatena o novo objeto com o array de objetos
       
       await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted)); // salva os dados no storage
+
 
       reset(); // limpa os campos do formulário
       setTransactionType(""); // limpa os campos do formulário
