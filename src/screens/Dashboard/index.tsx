@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Container,
   Header,
@@ -22,31 +22,48 @@ import {
   TransactionCardProps,
 } from "../../components/TransactionCard";
 
+import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface DataListProps extends TransactionCardProps {
   id: string;
 }
 
+interface HighlightProps {
+  total: string;
+  lastTransaction: string;
+}
+
+interface HighlightData {
+  entries: HighlightProps;
+  expensive: HighlightProps;
+}
+
 export function Dashboard() {
-  const [data, setData] = useState<DataListProps[]>([]);
+  const [transactions, setTransactions] = useState<DataListProps[]>([]);
+  const [highlightData, setHighlightData] = useState<HighlightData[]>({} as HighlightData);
 
   async function loadTransactions() {
     const dataKey = "@gofinances:transactions";
     const response = await AsyncStorage.getItem(dataKey);
     const transactions = response ? JSON.parse(response) : [];
 
-    setData(transactions);
+    let entriesTotal = 0;
+    let expensiveTotal = 0;
 
     const transactionsFormatted: DataListProps[] = transactions
     .map((item: DataListProps) => {
       
+      if (item.type === "positive") {
+        entriesTotal += Number(item.amount);
+      } else {
+        expensiveTotal += Number(item.amount);
+      }
+
       const amount = Number(item.amount).toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL",
       });
-
-      console.log(amount);
 
       const date = Intl.DateTimeFormat("pt-BR", {
         day: "2-digit",
@@ -64,13 +81,24 @@ export function Dashboard() {
       };
     });
 
-    setData(transactionsFormatted);
-    console.log(transactionsFormatted);
-  }
+    setTransactions(transactionsFormatted);
+    setHighlightData({
+      entries: {
+        total: entriesTotal
+      },
+      expensives: {
+        total: expensiveTotal
+      },
+      
+  });
 
   useEffect(() => {
     loadTransactions();
   }, []);
+
+  useFocusEffect(useCallback(() => {
+    loadTransactions();
+  },[]));
 
   return (
     <Container>
@@ -113,7 +141,7 @@ export function Dashboard() {
       <Transactions>
         <Title>Listagem</Title>
         <TransactionList
-          data={data}
+          data={transactions}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <TransactionCard data={item} />}
         />

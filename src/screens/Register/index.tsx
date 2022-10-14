@@ -48,7 +48,7 @@ export function Register() {
   const [transactionType, setTransactionType] = useState("");
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   
-  function handleTransactionTypeSelect(type: "up" | "down") {
+  function handleTransactionTypeSelect(type: "positive" | "negative") {
     setTransactionType(type);
   };
 
@@ -80,7 +80,7 @@ export function Register() {
       id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
-      transactionType,
+      type: transactionType,
       category: category.key,
       date: new Date(),
     };
@@ -136,16 +136,16 @@ export function Register() {
             />
             <TransactionsTypes>
               <TransactionTypeButton
-                onPress={() => handleTransactionTypeSelect("up")}
+                onPress={() => handleTransactionTypeSelect("positive")}
                 title="Entrada"
                 type="up"
-                isActive={transactionType === "up"}
+                isActive={transactionType === "positive"}
               />
               <TransactionTypeButton
-                onPress={() => handleTransactionTypeSelect("down")}
+                onPress={() => handleTransactionTypeSelect("negative")}
                 title="Saída"
                 type="down"
-                isActive={transactionType === "down"}
+                isActive={transactionType === "negative"}
               />
             </TransactionsTypes>
             <CategorySelectButton
