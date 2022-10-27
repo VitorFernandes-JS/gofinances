@@ -94,7 +94,6 @@ export function Register() {
       
       await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted)); // salva os dados no storage
 
-
       reset(); // limpa os campos do formulário
       setTransactionType(""); // limpa os campos do formulário
       setCategory({
