@@ -22,3 +22,13 @@ export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.shape};
     font-size: ${RFValue(22)}px;
 `;
+
+export const Content = styled.ScrollView.attrs({
+    contentContainerStyle: { flex: 1, padding: 24 },
+    showsVerticalScrollIndicator: false,
+})``;
+
+export const ChartContainer = styled.View`
+    width: 100%;
+    align-items: center;
+`;
