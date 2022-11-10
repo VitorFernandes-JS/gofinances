@@ -4,6 +4,8 @@ import theme from "./src/global/styles/theme";
 
 import { AppRoutes } from "./src/routes/app.routes";
 
+import { SignIn } from "./src/screens/SignIn";
+
 import AppLoading from "expo-app-loading";
 import { ThemeProvider } from "styled-components";
 import {
@@ -31,7 +33,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <NavigationContainer>
         <StatusBar hidden translucent={true} />
-        <AppRoutes />
+        <SignIn />
       </NavigationContainer>
     </ThemeProvider>
   );
