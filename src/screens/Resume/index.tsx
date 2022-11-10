@@ -48,7 +48,6 @@ export function Resume() {
   );
 
   function handleDateChange(action: "next" | "prev") {
-    setIsLoading(true);
     if (action === "next") {
       setSelectedDate(addMonths(selectedDate, 1));
       console.log(selectedDate);
@@ -59,6 +58,7 @@ export function Resume() {
   }
 
   async function loadData() {
+    setIsLoading(true);
     const dataKey = "@gofinances:transactions";
     const response = await AsyncStorage.getItem(dataKey);
     const responseFormatted = response ? JSON.parse(response) : [];
@@ -112,10 +112,6 @@ export function Resume() {
     setTotalByCategories(totalByCategory);
     setIsLoading(false);
   }
-
-  useEffect(() => {
-    loadData();
-  }, [selectedDate]);
 
   useFocusEffect(useCallback(() => {
     loadData();
